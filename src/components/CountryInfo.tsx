@@ -50,7 +50,7 @@ const CountryInfo: React.FC = () => {
   const getWeatherInfo = async () => {
       try {
         setWeatherLoading(true);
-          const res = await fetch(`http://api.weatherstack.com/current?access_key=09276fa6e73a3c0e88013b6416c64880&query=india`)
+          const res = await fetch(`http://api.weatherstack.com/current?access_key=09276fa6e73a3c0e88013b6416c64880&query=${country?.capital[0]}`)
           const data = await res.json();
           setWeatherInfo(data.current);
           setWeatherLoading(false);
