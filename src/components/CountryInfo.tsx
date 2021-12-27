@@ -16,12 +16,11 @@ interface InitCountry {
 }
 
 interface InitCountryInfo {
-    temperature: number;
-    weather_icons: string[];
-    wind_speed: number;
-    precip: number;
+  temperature: number;
+  weather_icons: string[];
+  wind_speed: number;
+  precip: number;
 }
-
 
 const CountryInfo: React.FC = () => {
   const { name } = useParams<InitProps>();
@@ -48,58 +47,70 @@ const CountryInfo: React.FC = () => {
   };
 
   const getWeatherInfo = async () => {
-      try {
-        setWeatherLoading(true);
-          const res = await fetch(`http://api.weatherstack.com/current?access_key=09276fa6e73a3c0e88013b6416c64880&query=${country?.capital[0]}`)
-          const data = await res.json();
-          setWeatherInfo(data.current);
-          setWeatherLoading(false);
-
-      }catch(error){
-        setWeatherLoading(false);
-          console.log(error)
-      }
-  }
+    try {
+      setWeatherLoading(true);
+      const res = await fetch(
+        `http://api.weatherstack.com/current?access_key=09276fa6e73a3c0e88013b6416c64880&query=${country?.capital[0]}`
+      );
+      const data = await res.json();
+      setWeatherInfo(data.current);
+      setWeatherLoading(false);
+    } catch (error) {
+      setWeatherLoading(false);
+      console.log(error);
+    }
+  };
   return (
     <div>
-       <h1>Country Info</h1>
-            {
-                loading ? <p>Loading...</p> :
-                    country ? <div className="country-content">
-                        <div className="left">
-                            <p>Capital: {country.capital[0]}</p>
-                            <p>Population: {country.population}</p>
-                            <p>Latitude: {country.latlng[0]}<sup>o</sup></p>
-                            <p>Longitude: {country.latlng[1]}<sup>o</sup></p>
-                        </div>
+      <h1>Country Info</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : country ? (
+        <div className="country-content">
+          <div className="left">
+            <p>Capital: {country.capital[0]}</p>
+            <p>Population: {country.population}</p>
+            <p>
+              Latitude: {country.latlng[0]}
+              <sup>o</sup>
+            </p>
+            <p>
+              Longitude: {country.latlng[1]}
+              <sup>o</sup>
+            </p>
+          </div>
 
-                        <div className="right">
-                            <img src={country.flags.svg} alt="_" />
-                        </div>
-                    </div> : <h3>Country not found by name: {name}</h3>
-            }
-            {
-                country && <Button
-                    size="medium"
-                    variant="contained"
-                    onClick={getWeatherInfo}
-                >
-                    Capital Weather
-                </Button>
-            }
+          <div className="right">
+            <img src={country.flags.svg} alt="_" />
+          </div>
+        </div>
+      ) : (
+        <h3>Country not found by name: {name}</h3>
+      )}
+      {country && (
+        <Button size="medium" variant="contained" onClick={getWeatherInfo}>
+          Capital Weather
+        </Button>
+      )}
 
-{
-                weatherLoading ? <p>Loading...</p> :
-                    weatherInfo && <div className="weather-info">
-                        <h3>{country?.capital[0]} Weather Info</h3>
-                        <div className="weather-content">
-                            <img src={weatherInfo.weather_icons[0]} alt="_" />
-                            <p>Temperature: {weatherInfo.temperature}<sup>o</sup></p>
-                            <p>Wind Speed: {weatherInfo.wind_speed}</p>
-                            <p>Precip: {weatherInfo.precip}</p>
-                        </div>
-                    </div>
-            }
+      {weatherLoading ? (
+        <p>Loading...</p>
+      ) : (
+        weatherInfo && (
+          <div className="weather-info">
+            <h3>{country?.capital[0]} Weather Info</h3>
+            <div className="weather-content">
+              <img src={weatherInfo.weather_icons[0]} alt="_" />
+              <p>
+                Temperature: {weatherInfo.temperature}
+                <sup>o</sup>
+              </p>
+              <p>Wind Speed: {weatherInfo.wind_speed}</p>
+              <p>Precip: {weatherInfo.precip}</p>
+            </div>
+          </div>
+        )
+      )}
     </div>
   );
 };
