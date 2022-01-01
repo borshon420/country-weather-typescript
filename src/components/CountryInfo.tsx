@@ -61,7 +61,7 @@ const CountryInfo: React.FC = () => {
     }
   };
   return (
-    <div>
+    <div data-testid="country">
       <h1>Country Info</h1>
       {loading ? (
         <p>Loading...</p>
@@ -111,7 +111,7 @@ const CountryInfo: React.FC = () => {
           </div>
         )
       )}
-    </div>
+    </div>                                     
   );
 };
 

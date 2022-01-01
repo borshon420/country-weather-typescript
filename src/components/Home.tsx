@@ -15,7 +15,7 @@ const Home: React.FC = () => {
     history.push(`/country/${countryName}`);
   };
   return (
-    <div>
+    <div data-testid="home">
       <h2>Welcome To Weather Application</h2>
       <div>
         <TextField
